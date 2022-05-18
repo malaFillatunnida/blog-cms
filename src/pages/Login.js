@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
-import image from "../../assets/images/6343825.jpg";
+import image from "../assets/images/6343825.jpg";
 import { useHistory } from "react-router-dom";
+import { API_URL } from "../utils/constans";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -11,18 +12,22 @@ const Login = () => {
 
   const Login = async (e) => {
     e.preventDefault();
+
+    const data = {
+      email: email,
+      password: password,
+    };
+
     try {
-      await axios.post("http://localhost:2020/api/users/login", {
-        email: email,
-        password: password,
-      });
+      await axios.post(API_URL + "/api/users/login", data);
       history.push("/Home");
-    } catch (error) {
-      if (error.response) {
-        setMsg(error.response.data.msg);
+    } catch (err) {
+      if (err.response) {
+        setMsg(err.response.data.msg);
       }
     }
   };
+
   return (
     <div className="body">
       <div className="container" id="container">

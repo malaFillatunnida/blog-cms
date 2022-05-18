@@ -10,46 +10,48 @@ import draftToHtml from "draftjs-to-html";
 import { useHistory } from "react-router-dom";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import axios from "axios";
-import { Card, Form, Col, Button, Row } from "react-bootstrap";
+import { Card, Form, Col, Button, Row, Container } from "react-bootstrap";
 import Swal from "sweetalert2";
+import { API_URL } from "../utils/constans";
 
-const AddBlog = (props) => {
-  let history = useHistory();
+const EditPost = (props) => {
+  const history = useHistory();
+
   const [userInfo, setuserInfo] = useState({
     title: props.postList[0].title,
-    name: props.postList[0].name,
+    username: props.postList[0].username,
   });
+
   const onChangeValue = (e) => {
     setuserInfo({
       ...userInfo,
       [e.target.name]: e.target.value,
     });
   };
-  let editorState = EditorState.createWithContent(
+
+  const editorState = EditorState.createWithContent(
     ContentState.createFromBlockArray(
       convertFromHTML(props.postList[0].description)
     )
   );
   const [description, setDescription] = useState(editorState);
-
   const onEditorStateChange = (editorState) => {
     setDescription(editorState);
   };
 
-  const PoemAddbooks = async (event) => {
+  const EditPost = async (event) => {
     Swal.fire({
-      title: "Apakah anda ingin menyimpan perubahan?",
+      title: "Do you want to save changes?",
       icon: "question",
       showDenyButton: true,
-      confirmButtonText: "Simpan",
-      denyButtonText: `Batal`,
+      confirmButtonText: "Save",
+      denyButtonText: `Cancel`,
     }).then((result) => {
-      /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
         axios
-          .post(`http://localhost:2020/editPost`, {
+          .post(API_URL + `/editPost`, {
             title: userInfo.title,
-            name: userInfo.name,
+            username: userInfo.username,
             description: userInfo.description.value,
             ids: props.editPostID,
           })
@@ -58,9 +60,13 @@ const AddBlog = (props) => {
               history.push("/Post");
             }
           });
-        Swal.fire("Tersimpan!", "Postingan anda berhasil diubah.", "success");
+        Swal.fire(
+          "Saved!",
+          "Your post has been modified successfully!",
+          "success"
+        );
       } else if (result.isDenied) {
-        Swal.fire("Perubahan tidak disimpan!", "", "info");
+        Swal.fire("Changes are not saved!", "", "info");
       }
     });
     event.preventDefault();
@@ -68,7 +74,7 @@ const AddBlog = (props) => {
   };
 
   return (
-    <div className="container pb-4">
+    <Container className="pb-4">
       <ul className="breadcrumb">
         <li>
           <a href="/Home">
@@ -84,54 +90,32 @@ const AddBlog = (props) => {
           <i className="fas fa-edit me-2"></i>Edit Post
         </li>
       </ul>
-      <Card className="shadow">
-        <div className="card-header">
-          <h4
-            style={{
-              float: "left",
-            }}
-          >
-            Edit Blog
-          </h4>
-        </div>
-
-        <Form
-          style={{
-            padding: "10px",
-          }}
-          onSubmit={PoemAddbooks}
-        >
-          <Form.Group
-            as={Row}
-            className="mb-3"
-            controlId="formPlaintextPassword"
-          >
+      <Card>
+        <Card.Header>
+          <h4 className="pt-1">Edit Post</h4>
+        </Card.Header>
+        <Form className="p-2" onSubmit={EditPost}>
+          <Form.Group as={Row} className="mb-3">
             <Form.Label column sm="2">
-              Nama
+              Name
             </Form.Label>
             <Col sm="10">
               <Form.Control
                 type="text"
-                placeholder="Nama mu..."
                 required
-                name="name"
-                value={userInfo.name}
+                name="username"
+                value={userInfo.username}
                 onChange={onChangeValue}
               />
             </Col>
           </Form.Group>
-          <Form.Group
-            as={Row}
-            className="mb-3"
-            controlId="formPlaintextPassword"
-          >
+          <Form.Group as={Row} className="mb-3">
             <Form.Label column sm="2">
-              Judul Blog
+              Title
             </Form.Label>
             <Col sm="10">
               <Form.Control
                 type="text"
-                placeholder="Judul Blog..."
                 required
                 name="title"
                 value={userInfo.title}
@@ -139,30 +123,9 @@ const AddBlog = (props) => {
               />
             </Col>
           </Form.Group>
-          {/* <Form.Group
-                as={Row}
-                className="mb-3"
-                controlId="formPlaintextPassword"
-              >
-                <Form.Label column sm="2">
-                  Kategori
-                </Form.Label>
-                <Col sm="10">
-                  <Form.Select name="category" required>
-                    <option disabled>Open this select menu</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </Form.Select>
-                </Col>
-              </Form.Group> */}
-          <Form.Group
-            as={Row}
-            className="mb-3"
-            controlId="formPlaintextPassword"
-          >
+          <Form.Group as={Row} className="mb-3">
             <Form.Label column sm="2">
-              Isi Konten
+              Description
             </Form.Label>
             <Col sm="10">
               <Editor
@@ -173,7 +136,7 @@ const AddBlog = (props) => {
                 onEditorStateChange={onEditorStateChange}
               />
               <textarea
-                style={{ display: "none" }}
+                className="d-none"
                 disabled
                 ref={(val) => (userInfo.description = val)}
                 value={draftToHtml(
@@ -182,25 +145,20 @@ const AddBlog = (props) => {
               />
             </Col>
           </Form.Group>
+
           <Col>
             <Button
               variant="outline-dark"
-              style={{
-                padding: "5px",
-                borderRadius: "10px",
-                float: "right",
-              }}
+              className="p-2 float-end fw-bold"
               type="submit"
             >
-              <strong>
-                SIMPAN <i className="fa fa-save"></i>
-              </strong>
+              SAVE <i className="fa fa-save"></i>
             </Button>
           </Col>
         </Form>
       </Card>
-    </div>
+    </Container>
   );
 };
 
-export default AddBlog;
+export default EditPost;

@@ -8,10 +8,10 @@ body {
     rgb(255, 203, 107)
   );
 }
-.jingga {
+.orange {
   color: orange;
 }
-.merah {
+.red {
   color: red;
 }
 
@@ -35,23 +35,7 @@ body {
   color: white;
 }
 
-/* .list-group-item.active {
-  border-top-left-radius: 50px;
-  border-bottom-left-radius: 50px;
-  background-image: linear-gradient(
-    to left,
-    orange,
-    rgb(255, 172, 19),
-    rgb(255, 177, 32),
-    rgb(255, 179, 38),
-    rgb(255, 184, 52)
-  );
-  color: white;
-  font-weight: bold;
-  border: none;
-} */
-
-.bungkus {
+.wrapper {
   overflow-x: hidden;
 }
 
@@ -70,11 +54,11 @@ body {
   width: 240px;
 }
 
-.konten-bungkus {
+.content-wrapper {
   min-width: 100vw;
 }
 
-body.sidebar-toggle .bungkus .sidebar {
+body.sidebar-toggle .wrapper .sidebar {
   margin-left: 0;
 }
 
@@ -83,12 +67,12 @@ body.sidebar-toggle .bungkus .sidebar {
     margin-left: 0;
   }
 
-  .konten-bungkus {
+  .content-wrapper {
     min-width: 0;
     width: 100%;
   }
 
-  body.sidebar-toggle .bungkus .sidebar {
+  body.sidebar-toggle .wrapper .sidebar {
     margin-left: -15rem;
   }
 }
@@ -117,16 +101,6 @@ body.sidebar-toggle .bungkus .sidebar {
   text-transform: capitalize;
   font-size: 0.875rem;
   font-weight: 500;
-}
-.table-responsive {
-  display: block;
-  width: 100%;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  -ms-overflow-style: -ms-autohiding-scrollbar;
-}
-.dropdown-toggle::after {
-  display: none;
 }
 a {
   text-decoration: none;
@@ -167,11 +141,7 @@ a {
   width: 100%;
   background: white;
 }
-/* #container .form-content {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-} */
+
 .form-content .login-form,
 .form-content .signup-form {
   width: calc(100% / 2 - 25px);
