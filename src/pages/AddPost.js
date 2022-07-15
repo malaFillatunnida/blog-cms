@@ -150,7 +150,9 @@ const AddBlog = () => {
                     }}
                     required
                   >
-                    <option disabled>Select Category</option>
+                    <option disabled value="">
+                      Select Category
+                    </option>
                     {category_id.map((pot, index) => (
                       <option value={pot.id} key={index}>
                         {pot.name}

@@ -86,21 +86,23 @@ const Comments = () => {
                     <th>Action</th>
                   </tr>
                 </thead>
-                {comment.map((blog, index) => (
-                  <tr key={blog.id}>
-                    <td>{index + 1}</td>
-                    <td>{blog.username}</td>
-                    <td>{blog.post_id}</td>
-                    <td>{blog.text}</td>
-                    <td>
-                      <i
-                        className="fa fa-trash text-danger"
-                        aria-hidden="true"
-                        onClick={() => deleteComment(blog.id)}
-                      ></i>
-                    </td>
-                  </tr>
-                ))}
+                <tbody>
+                  {comment.map((blog, index) => (
+                    <tr key={blog.id}>
+                      <td>{index + 1}</td>
+                      <td>{blog.usernama}</td>
+                      <td>{blog.post.title}</td>
+                      <td>{blog.text}</td>
+                      <td>
+                        <i
+                          className="fa fa-trash text-danger"
+                          aria-hidden="true"
+                          onClick={() => deleteComment(blog.id)}
+                        ></i>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
               </Table>
             </Card.Body>
           </Card>

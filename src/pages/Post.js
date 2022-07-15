@@ -94,7 +94,7 @@ const Posts = () => {
                     <th>Image</th>
                     <th>Name</th>
                     <th>Title</th>
-                    <th>Description</th>
+                    <th>Category</th>
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -111,13 +111,7 @@ const Posts = () => {
                       </td>
                       <td>{blog.username}</td>
                       <td>{blog.title}</td>
-                      <td>
-                        <div
-                          dangerouslySetInnerHTML={{
-                            __html: blog.description.slice(0, 30),
-                          }}
-                        />
-                      </td>
+                      <td>{blog.category.name}</td>
                       <td>
                         <a href={`/EditPost/${blog.id}`}>
                           <i className="fas fa-edit me-2"></i>
